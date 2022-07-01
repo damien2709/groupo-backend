@@ -37,6 +37,17 @@ require('./routes/updatePost')(app) // la route et le traitement pour créer un 
 // DELETE
 require('./routes/deletePost')(app) // la route et le traitement pour créer un élément unique.
 
+
+// --------------------- GESTION DES ERREURS ---------------------
+    //404
+      // On créé un middleware qui va intercepté les réponses du client qui ne correspondent pas à nos routes déclarées précédemment, ce qui va nous permettre de personnaliser la réponse 404. 
+      app.use(({res}) => {
+        const message = 'Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre url.'
+        res.status(404).json({message}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
+        }
+      )
+      
+
 // ------------------ DEMARRAGE DE L'API SUR LE PORT DEDIE ----------------
 app.listen(port, () => console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))  // On démarre l'API REST grace à la méthode "listen" qui prend 2 arguments : le port utilisé (3000) et une fonction : elle affiche un message de confirmation dans le terminal de commandes. 
 

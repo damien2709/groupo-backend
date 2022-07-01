@@ -1,3 +1,5 @@
+// ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
+
 const { Post } = require('../src/db/sequelize') // On importe dans notre fichier le modèle de post qui définit la structure de la table 'pokemons'
 // Ensuite on exporte une fonction qui prend en paramètre l'application Express dans son entièreté. C'est ce qui nous permet de prendre en compte les routes dans app.js mais en ayant des fichiers de routes séparés et distincts. 
 module.exports = (app) => {
@@ -6,6 +8,10 @@ module.exports = (app) => {
         .then(posts => {
           const message = 'La liste des posts a bien été récupérée.'
           res.json({ message, data: posts }) // On retourne directement notre réponse à l'intérieur de la méthode res.json()
+        })
+        .catch(error => {
+          const message = " La liste des posts n'a pas pu être récupérée. Réessayez dans quelques instants."
+          res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
         })
     })
 }
