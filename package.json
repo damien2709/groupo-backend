@@ -1,0 +1,17 @@
+{
+  "name": "backend_groupomania",
+  "version": "1.0.0",
+  "description": "Le backend du réseau social de Groupomania",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Damien Will",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
+}
