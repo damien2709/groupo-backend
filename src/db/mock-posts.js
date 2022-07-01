@@ -1,4 +1,4 @@
-const posts = [
+const postsBdd = [
     {
         id: 1,
         title: "Soirée pizza",
@@ -37,4 +37,4 @@ const posts = [
     }
 ]
 
-module.exports = posts;
+module.exports = postsBdd;

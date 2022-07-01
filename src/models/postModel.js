@@ -2,7 +2,7 @@
 
 //on exporte une fonction qui prend 2 paramètres : 'sequelize' (l'objet représente la connexion à notre BDD) et 'DataTypes' qui permet de définir les types de données de chaque propriété de notre modèle.
 module.exports = (sequelize, DataTypes) => {
-    // On va ensuite, grace à la méthode .define de l'objet paramètre, déclarer la création d'une table dans la BDD sequelize. Cette méthode prend 3 paramètres : le nom du modèle, la description de notre modèle avec ses différentes propriétés, des options facultatives de paramétrages globales. On 'return' le résultat de la méthode, car cette dernière retourne directement le nouveau modèle déclaré. On pourra donc utiliser ce modèle ailleurs dans notre API REST grace à l'exportation de module que l'on fait à la ligne 1. 
+    // On va ensuite, grace à la méthode .define de l'objet paramètre, déclarer la création d'une table dans la BDD sequelize. Cette méthode prend 3 paramètres : le nom du modèle (donc de la table), la description de notre modèle avec ses différentes propriétés, des options facultatives de paramétrages globales. On 'return' le résultat de la méthode, car cette dernière retourne directement le nouveau modèle déclaré. On pourra donc utiliser ce modèle ailleurs dans notre API REST grace à l'exportation de module que l'on fait à la ligne 1. 
     return sequelize.define('Post', {
   // Description du modèle (propriétés)
       id: {
