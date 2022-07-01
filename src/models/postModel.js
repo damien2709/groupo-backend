@@ -28,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+    // ATTENTION avec les propriétés qui seraient des tableaux ou des objets, comme la BDD ne gère que des strings, il faudra implémenter à la propriété un GETTER et un SETTER. 
+
   // Options facultatives de paramétrage globales
   {
       timestamps: true, // en passant la valeur 'true', on indique que l'on souhaite modifier le comportement par défaut proposé par Sequelize (c’est-à-dire faire des modification de configuration globale). 

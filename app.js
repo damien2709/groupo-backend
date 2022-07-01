@@ -23,8 +23,19 @@ sequelize.initDb()  // On appelle la méthode 'initDb' que l'on a définit dans 
 
 
 // ----------------- POINTS DE TERMINAISON ----------------
-// Chaque point de terminaison a son propre dossier javascript placé dans le dossier 'src/routes'
+    // GET
+require('./routes/getAllPosts')(app) //on importe le fichier du point de terminaison qui est en fait une fonction qui prend un paramètre auquel on va donner la valeur 'app' qui est l'application Express. 
 
+require('./routes/getOnePost')(app) // la route et le traitement pour voir un élément unique.
+
+    // POST
+require('./routes/createPost')(app) // la route et le traitement pour créer un élément unique.
+
+    // UPDATE
+require('./routes/updatePost')(app) // la route et le traitement pour créer un élément unique.
+
+// DELETE
+require('./routes/deletePost')(app) // la route et le traitement pour créer un élément unique.
 
 // ------------------ DEMARRAGE DE L'API SUR LE PORT DEDIE ----------------
 app.listen(port, () => console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))  // On démarre l'API REST grace à la méthode "listen" qui prend 2 arguments : le port utilisé (3000) et une fonction : elle affiche un message de confirmation dans le terminal de commandes. 
