@@ -3,8 +3,9 @@
 // ------------------ IMPORTATIONS -----------------
 const { Sequelize, DataTypes } = require('sequelize') //syntaxe ES6 d'importation d'une méthode d'un fichier plutôt que du fichier complet. On importe l'ORM Sequelize pour communiquer avec la BDD sur MAMP. On importe également l'objet 'DataTypes' qui contient les types disponibles dans Sequelize pour définir les types de données contenus dans les propriétés du modèle. 
 const PostModel = require('../models/postModel') //on importe notre modèle (de table) Sequelize "Post" déclaré dans le fichier 'postModel.js'
+const UserModel = require('../models/userModel') //on importe notre modèle (de table) Sequelize "User" déclaré dans le fichier 'UserModel.js'
 const postBdd = require('./mock-posts')
-const mysql = require('mysql2') // on importante dans une constante le connecteur de Sequelize "mysql2"
+const bcrypt = require('bcrypt') //j'importe le module bcrypt pour hasher les mots de passe. 
 
 // ---------------- CONNEXION A LA BDD ----------------
 
@@ -29,6 +30,7 @@ sequelize.authenticate()
 // ----------------- CREATION/ GESTION DES TABLES ET SYNCHRONISATION -----------
  // On crée une table dans la BDD, associé à un modèle Sequelize
 const Post = PostModel(sequelize, DataTypes) // On passe en paramètres les 2 qui sont attendus par notre modèle 
+const User = UserModel(sequelize, DataTypes) // On instancie auprès de Sequelize notre modèle User
 // On synchronise la BDD en créant la fonction 'initDb' et en lui passant des modèles
 const initDb = () => {
   return sequelize.sync({force: true}) //force:true permet de supprimer la table associée au modèle avant chaque synchronisation. On perd les données précédentes mais ça nous facilite la vie dans la phase de développement. Par exemple, pour apporter des modifications de modèles sans se trimballer les anciennes propriétés qui ont disparus du modèle. 
@@ -44,14 +46,29 @@ const initDb = () => {
             like: post.like 
         }).then(post => console.log(post.toJSON())) // on demande à Sequelize de faire une requête à la BDD pour demander si chaque post a bien été créé, et on attend sa réponse en asynchrone. Elle arrive en JSON (pour afficher correctement les informations d'une instance d'un modèle) car la méthode 'toJSON' permet de n'afficher en JSOn que les valeurs qui nous interessent (et pas celles en interne de Sequelize). 
         })
+        // on pousse un nouvel utilisateur en bdd grace à la méthode 'create', avec un mot de passe hashé grace à bcrypt: 
+        bcrypt.hash('groupo', 10)
+          .then(hash => {
+              User.create( {
+                username: 'groupo',
+                password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
+                surname: "damien",
+                name: "Will",
+                email: "damien.will@ingdev.fr",
+                department: "communication",
+                tel: "0387554870"
+              })
+              .then(user => console.log(user.toJSON()))
+          })
         console.log('La base de donnée a bien été initialisée !') // j'affiche une indication de bonne connexion
     })
 }
 
 
 // ------------------ EXPORTATION ----------------
-    // j'exporte la fonction initDb et le modèle Pokemon. On pourra réutiliser ces éléments ailleurs dans notre code. 
+    // j'exporte la fonction initDb, les modèles "Post" et "user". On pourra réutiliser ces éléments ailleurs dans notre code. 
 module.exports = { 
   initDb, 
-  Post
+  Post,
+  User
 }

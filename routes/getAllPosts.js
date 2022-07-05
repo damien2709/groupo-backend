@@ -11,7 +11,14 @@ module.exports = (app) => {
     app.get('/api/posts', (req, res) => {
       if (req.query.category) { //On souhaite extraire de l'url le paramètre 'category'. On passe par la requête 'req' fournie par Express. 
         const category = req.query.category
-        return Post.findAll ({ where: { category: category}}) // on a ajouté le paramètre 'where' à la méthode de Sequelize 'findAll'.
+        return Post.findAll ({ 
+          where: { 
+            category: category
+          },
+          order: [
+            ['created', 'DESC'] //ici on va ordonner les résultats par date de création (avec la propriété 'created') et par odre décroissant.
+          ],
+        }) // on a ajouté le paramètre 'where' à la méthode de Sequelize 'findAll'.
         .then(posts => {
           const message = `il y a ${posts.length} message(s) appartenant à la catégorie ${category}.`
           res.json({ message, data: posts }) 
@@ -25,7 +32,10 @@ module.exports = (app) => {
             title: { //'title' est la propriété du modèle post. 
               [Op.like]: `%${title}%` // 'title' est le critère de la recherche. On passe par l'opérateur Sequelize [Op.like] pour mettre en place la recherche large par titre ('titre') d'un message ou le terme de la recherche est contenu dans le titre du message.  
             }
-          }
+          },
+          order: [
+            ['created', 'DESC'] //ici on va ordonner les résultats par date de création (avec la propriété 'created') et par odre décroissant.
+          ],
         })
         .then(posts => {
           const message = `il y a ${posts.length} messages correspondant à la recherche ${title}.`
@@ -35,8 +45,12 @@ module.exports = (app) => {
       }
         // Si pas de recherche spécifique : 
       else {
-        // Ensuite, si on n'applique pas de paramètres de requête, on aura la liste complète des messages
-        Post.findAll() // On utilise la méthode findAll() qui retourne une promesse contenant la liste de toutes les instances (messages) présentes dans la BDD.
+        // Ensuite, si on n'applique pas de paramètres de requête, on aura la liste complète des messages. On utilise la méthode findAll() qui retourne une promesse contenant la liste de toutes les instances (messages) présentes dans la BDD.
+        Post.findAll({
+          order: [
+            ['created', 'DESC'] //ici on va ordonner les résultats par date de création (avec la propriété 'created') et par odre décroissant.
+          ],
+        }) 
 
         .then(posts => {
           const message = 'La liste des posts a bien été récupérée.'
