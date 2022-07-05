@@ -3,9 +3,12 @@
 const { Post } = require('../src/db/sequelize')
 
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize. 
+
+const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
   
 module.exports = (app) => {
-  app.post('/api/posts', (req, res) => {
+  // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
+  app.post('/api/posts', auth, (req, res) => {
     Post.create(req.body)
       .then(post => {
         const message = `Le message ${req.body.title} a bien été crée.`

@@ -5,10 +5,13 @@ const { Post } = require('../src/db/sequelize') // On importe dans notre fichier
 
 const {Op} = require('sequelize') // on importe les opérateurs de Sequelize pour trier les recherches de message par paramètres (titre, catégorie, ...). 
 
+const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
+
 module.exports = (app) => {
+  // la méthode 'get' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
   // On introduit des paramètres de requêtes au début : 
         //------- en 1 : rechercher par catégorie de message.
-    app.get('/api/posts', (req, res) => {
+    app.get('/api/posts', auth, (req, res) => {
       if (req.query.category) { //On souhaite extraire de l'url le paramètre 'category'. On passe par la requête 'req' fournie par Express. 
         const category = req.query.category
         return Post.findAll ({ 

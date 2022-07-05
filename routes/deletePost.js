@@ -1,9 +1,12 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
 const { Post } = require('../src/db/sequelize')
+
+const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
   
 module.exports = (app) => {
-  app.delete('/api/posts/:id', (req, res) => {
+  // la méthode 'delete' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
+  app.delete('/api/posts/:id', auth, (req, res) => {
       // On commence par récupérer le post avec la méthode 'findByPk()'. Ca permet de retourner dans la réponse  au client le post qui a été supprimé . API de qualité !
     Post.findByPk(req.params.id)
       .then(post => {

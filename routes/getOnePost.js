@@ -1,9 +1,12 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
 const { Post } = require('../src/db/sequelize')
+
+const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
   
 module.exports = (app) => {
-  app.get('/api/posts/:id', (req, res) => {
+  // la méthode 'get' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
+  app.get('/api/posts/:id', auth, (req, res) => {
     Post.findByPk(req.params.id) // on a plus besoin de cette ligne de code : ' const id = parseInt(req.params.id) ' car la méthode findByPk() est capable de distinguer un "1" de 1. 
       .then(post => {
         // Pour gérer l'erreur 404, on va vérifier si le post demandé existe bien. La méthode 'findByPk' retourne 'null' si aucun post n'a été trouvé en bdd pour l'identifiant fourni en paramètre.  Donc en vérifiant si le résultat post est nul ou non, à la ligne 7, on est capable de déterminer si le post demandé par le client existe ou non.

@@ -1,7 +1,7 @@
 // **** ROLE : définir un modèle d'utilisateur pour comparer les identifiants envoyés par nos utilisateurs avec les identifiants déjà stocké en base de données.
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('UserModel', {
+    return sequelize.define('User', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

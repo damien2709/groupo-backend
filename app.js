@@ -31,6 +31,8 @@ require('./routes/getOnePost')(app) // la route et le traitement pour voir un é
     // POST
 require('./routes/createPost')(app) // la route et le traitement pour créer un élément unique.
 
+require('./routes/login')(app) // la route et le traitement pour l'authentification.
+
     // UPDATE
 require('./routes/updatePost')(app) // la route et le traitement pour créer un élément unique.
 
