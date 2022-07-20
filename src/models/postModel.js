@@ -1,7 +1,7 @@
 // **** ROLE : PERMET DE DEFINIR LA STRUCTURE DE LA TABLE 'POST' DE NOTRE BDD. PERMET D'APPLIQUER DES TRAITEMENTS AUX DONNEES POUR LES CONVERTIR ET LES RENDRE UTILISABLES ENTRE BDD ET API
 
 // Je définis une constante qui comprendra la liste des choix possibles de la propriété 'category' d'un message
-const validCategory = ['Fun', 'Entraide', 'Infos' ]
+const validCategory = ['Fun', 'Entraide', 'Infos', 'Projet' ]
 
 //on exporte une fonction qui prend 2 paramètres : 'sequelize' (l'objet représente la connexion à notre BDD) et 'DataTypes' qui permet de définir les types de données de chaque propriété de notre modèle.
 module.exports = (sequelize, DataTypes) => {
