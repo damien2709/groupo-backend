@@ -14,6 +14,7 @@ module.exports = (app) => {
               password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
               surname: req.body.surname,
               name: req.body.name,
+              photo: req.body.photo,
               email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,
@@ -29,9 +30,11 @@ module.exports = (app) => {
                   if(error instanceof ValidationError) {
                     return res.status(400).json({ message: error.message, data: error}) // On peut passer le message d'erreur défini dans notre validateur du fichier de modèle post directement dans l'erreur envoyée au client grace à la méthode 'error.message'. 
                   }
+                  else {
                   // Si l'erreur vient du coté serveur, on va paramétrer une réponse code 500.
                   const message = " L'utilisateur' n'a pas pu être créé. Réessayez dans quelques instants."
                   res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
+                  }
                 })
   
     })

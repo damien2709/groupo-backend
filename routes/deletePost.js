@@ -14,7 +14,7 @@ module.exports = (app) => {
           const message = "Le message demandé n'existe pas. Réessayez avec un autre identifiant."
           return res.status(404).json({message}) // Ici on place un 'return' qui permet de mettre fin à l'instruction sans passer à la suite du code à l'intérieur du '.then'. Car avec la méthode 'res.json' de Express, cette dernière applique tout le code avant elle !
         }
-
+        else {
         const postDeleted = post;
         // Ensuite, grace à la méthode 'destroy()' de Sequelize, on va pouvoir supprimer le pokemon. On utilise l'instruction 'return' qui permet de factoriser (mutualiser) la gestion de l'erreur 500 ( car il y a 2 requêtes : findByPk() et destoy()). Voir fichier updatePokemon.js.
         return Post.destroy({
@@ -24,6 +24,7 @@ module.exports = (app) => {
             const message = `Le message avec l'identifiant n°${postDeleted.id} a bien été supprimé.`
             res.json({message, data: postDeleted })
           })
+        }
       })
       // Ici je gère l'erreur 500 de la requête 'update' qui pourrait ne pas aboutir.
     .catch(error => {

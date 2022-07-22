@@ -14,9 +14,10 @@ module.exports = (app) => {
           const message = "Le message demandé n'existe pas. Réessayez avec un autre identifiant."
           return res.status(404).json({message}) // Ici on place un 'return' qui permet de mettre fin à l'instruction sans passer à la suite du code à l'intérieur du '.then'. Car avec la méthode 'res.json' de Express, cette dernière applique tout le code avant elle !
         }
-
+        else {
         const message = 'Le message a bien été trouvé.'
         res.json({ message, data: post })
+        }
       })
 
     	// Pour gérer l'erreur 500, on va utiliser la méthode '.catch()'
