@@ -31,7 +31,8 @@ require('./routes/login')(app) // la route et le traitement pour l'authentificat
 require('./routes/createPost')(app) // la route et le traitement pour créer un élément unique.
 
     // UPDATE
-require('./routes/updatePost')(app) // la route et le traitement pour créer un élément unique.
+require('./routes/updatePost')(app) // la route et le traitement pour modifier un post.
+
 
 // DELETE
 require('./routes/deletePost')(app) // la route et le traitement pour créer un élément unique.

@@ -14,11 +14,11 @@ module.exports = (app) => {
               password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
               surname: req.body.surname,
               name: req.body.name,
-              photo: req.body.photo,
               email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,
-              isAdmin: req.body.isAdmin
+              isAdmin: req.body.isAdmin,
+              isLogged: req.body.isLogged
             })
               .then(user => {
                 const message = `L'utilisateur ${req.body.username} a bien été crée.`
