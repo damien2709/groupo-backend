@@ -24,18 +24,18 @@ module.exports = (app) => {
                 const message = `L'utilisateur ${req.body.username} a bien été crée.`
                 res.json({ message, data: user })
               })
-              .catch(error => {
-                // Si l'erreur vient du coté client avec une invalidation des données, on va paramétrer une réponse code 400. 
-                  // On vérifie si l'erreur vient de Sequelize ou non. Si oui, c'est la faute du client donc erreur 400. 
-                  if(error instanceof ValidationError) {
-                    return res.status(400).json({ message: error.message, data: error}) // On peut passer le message d'erreur défini dans notre validateur du fichier de modèle post directement dans l'erreur envoyée au client grace à la méthode 'error.message'. 
-                  }
-                  else {
-                  // Si l'erreur vient du coté serveur, on va paramétrer une réponse code 500.
-                  const message = " L'utilisateur' n'a pas pu être créé. Réessayez dans quelques instants."
-                  res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
-                  }
-                })
+          .catch(error => {
+              // Si l'erreur vient du coté client avec une invalidation des données, on va paramétrer une réponse code 400. 
+              // On vérifie si l'erreur vient de Sequelize ou non. Si oui, c'est la faute du client donc erreur 400. 
+              if(error instanceof ValidationError) {
+                  return res.status(400).json({ message: error.message, data: error}) // On peut passer le message d'erreur défini dans notre validateur du fichier de modèle post directement dans l'erreur envoyée au client grace à la méthode 'error.message'. 
+              }
+              else {
+              // Si l'erreur vient du coté serveur, on va paramétrer une réponse code 500.
+                const message = " L'utilisateur' n'a pas pu être créé. Réessayez dans quelques instants."
+                res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
+                }
+          })
   
     })
   })

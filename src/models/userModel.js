@@ -73,6 +73,10 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { mes: "Veuillez renseigner votre service dans l'entreprise" }
         }
       },
+      picture: {
+        type : DataTypes.STRING,
+        isUrl: {msg: "Veuillez entrer une URL correcte"},
+      },
       tel: {
         type: DataTypes.STRING,
         allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
