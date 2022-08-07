@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true, // indique quelle propriété est la clé primaire
         autoIncrement: true //Indique si la valeur se définit automatiquement en +1
       },
+      authorId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
@@ -55,7 +59,6 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }, 
-
       picture: {
         type: DataTypes.STRING,
         allowNull: true, // la propriété est facultative
@@ -66,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       like: {
         type: DataTypes.INTEGER,
-        allowNull: true // la propriété est facultative
+        defaultValue: 0,
       }
     },
 

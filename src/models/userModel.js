@@ -55,6 +55,9 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type : DataTypes.STRING,
         allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
+        unique : { 
+          msg: "L'email existe déjà dans la base de données !"
+      },
         // On définit pour la propriété 3 validateurs pour vérifier que le nom ne comporte pas une string vide, que la valeur de la propriété ne peut pas être nulle et qu'il s'agit bien d'un email. On définit un message spécifique pour chaque validateur !
         validate : {
           notEmpty: { msg: "L'email ne peut être vide !" },
@@ -66,35 +69,30 @@ module.exports = (sequelize, DataTypes) => {
       },
       department:{
         type: DataTypes.STRING,
-        allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
+        /* allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
         // On définit pour la propriété 2 validateurs pour vérifier que le nom ne comporte pas une string vide et que la valeur de la propriété ne peut pas être nulle. On définit un message spécifique pour chaque validateur !
         validate : {
           notEmpty: { msg: "Le service ne peut être vide !" },
           notNull: { mes: "Veuillez renseigner votre service dans l'entreprise" }
-        }
+        }*/
+      },
+      tel: {
+        type: DataTypes.STRING,
+        /*allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
+        // On définit pour la propriété 2 validateurs pour vérifier que le nom ne comporte pas une string vide et que la valeur de la propriété ne peut pas être nulle. On définit un message spécifique pour chaque validateur !
+        validate : {
+          notEmpty: { msg: "Le numéro de téléphone ne peut être vide !" },
+          notNull: { mes: "Veuillez renseigner le numéro de téléphone de votre poste" }
+        }*/
       },
       picture: {
         type : DataTypes.STRING,
         isUrl: {msg: "Veuillez entrer une URL correcte"},
       },
-      tel: {
-        type: DataTypes.STRING,
-        allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
-        // On définit pour la propriété 2 validateurs pour vérifier que le nom ne comporte pas une string vide et que la valeur de la propriété ne peut pas être nulle. On définit un message spécifique pour chaque validateur !
-        validate : {
-          notEmpty: { msg: "Le numéro de téléphone ne peut être vide !" },
-          notNull: { mes: "Veuillez renseigner le numéro de téléphone de votre poste" }
-        }
-      },
       isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-      },
-      isLogged: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-
+      }
     },
     // Options facultatives de paramétrage globales
   {

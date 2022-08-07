@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt') // on en a besoin pour comparer les mots de pas
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize. 
   
 module.exports = (app) => {
-  // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. Pas besoin du middleware d'authentification pour la création d'un compte. Par contre on utilise la méthode "hash" de Bcrypt pour encrypter le mot de passe et créer l'utilisateur. 
+  // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. Pas besoin du middleware d'authentification pour la création d'un compte. Par contre on utilise la méthode "hash" de Bcrypt pour encrypter le mot de passe et créer l'utilisateur (selon le modèle User). 
   app.post('/api/createAccount', (req, res) => {
     bcrypt.hash(req.body.password, 10)
           .then(hash => {
@@ -17,6 +17,8 @@ module.exports = (app) => {
               email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,
+              picture: req.body.picture,
+              conditions: req.body.conditions,
               isAdmin: req.body.isAdmin,
               isLogged: req.body.isLogged
             })
