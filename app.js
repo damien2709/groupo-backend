@@ -27,6 +27,8 @@ require('./routes/getAllPosts')(app) //on importe le fichier du point de termina
 
 require('./routes/getOnePost')(app) // la route et le traitement pour voir un élément unique.
 
+require('./routes/getYourAccount')(app) // la route et le traitement pour voir un élément unique.
+
     // POST
 require('./routes/createAccount')(app) // la route et le traitement pour la création d'un compte utilisateur.
 
@@ -35,6 +37,8 @@ require('./routes/login')(app) // la route et le traitement pour l'authentificat
 require('./routes/createPost')(app) // la route et le traitement pour créer un élément unique.
 
     // UPDATE
+require('./routes/updateAccount')(app) // la route et le traitement pour modifier un compte user.
+
 require('./routes/updatePost')(app) // la route et le traitement pour modifier un post.
 
 // DELETE
