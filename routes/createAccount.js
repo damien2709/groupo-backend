@@ -17,10 +17,10 @@ module.exports = (app) => {
               email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,
-              picture: req.body.picture,
               conditions: req.body.conditions,
               isAdmin: req.body.isAdmin,
-              isLogged: req.body.isLogged
+              isLogged: req.body.isLogged,
+              picture: '',
             })
               .then(user => {
                 const message = `L'utilisateur ${req.body.username} a bien été crée.`

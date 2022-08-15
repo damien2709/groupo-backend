@@ -73,7 +73,7 @@ const initDb = () => {
 				  email: "damien.will@ingdev.fr",
 				  department: "communication",
 				  tel: "0387554870",
-				  picture: "https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fi.pinimg.com%2F736x%2F42%2F35%2F08%2F423508c9c018d86469115b7b0f620d65--photoshop-tutorial-adobe-photoshop.jpg&sp=1660213012T34336060a679aa509bc228a7bce02b6e0489979cde7bc9077ce7c8f34b25ec25"
+				  picture: "http://localhost:3000/images/unknownUser.jpg"
 				})
 				.then(user => console.log(user.toJSON()))
 			})
