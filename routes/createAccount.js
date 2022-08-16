@@ -20,7 +20,7 @@ module.exports = (app) => {
               conditions: req.body.conditions,
               isAdmin: req.body.isAdmin,
               isLogged: req.body.isLogged,
-              picture: '',
+              picture: 'http://localhost:3000/images/unknownUser.jpg',
             })
               .then(user => {
                 const message = `L'utilisateur ${req.body.username} a bien été crée.`

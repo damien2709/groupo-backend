@@ -45,6 +45,8 @@ require('./routes/updateAccount')(app) // la route et le traitement pour modifie
 require('./routes/updatePost')(app) // la route et le traitement pour modifier un post.
 
 // DELETE
+require('./routes/deleteAccount')(app) // la route et le traitement pour créer un élément unique.
+
 require('./routes/deletePost')(app) // la route et le traitement pour créer un élément unique.
 
 

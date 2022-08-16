@@ -17,15 +17,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      title: {
+      authorSurname: {
         type: DataTypes.STRING,
         allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
         // Pas de contrainte d'unicité !
-        // On définit pour la propriété 2 validateurs pour vérifier que le nom ne comporte pas une string vide et que la valeur de la propriété ne peut pas être nulle. On définit un message spécifique pour chaque validateur !
-        validate : {
-          notEmpty: { msg: "Le titre de votre message ne peut être vide !" },
-          notNull: { mes: 'Veuillez donner un titre à votre message' }
-        }
+      },
+      authorName: {
+        type: DataTypes.STRING,
+        allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
+        // Pas de contrainte d'unicité !
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: true, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
+        // Pas de contrainte d'unicité !
       },
       content: {
         type: DataTypes.STRING,

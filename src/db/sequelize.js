@@ -46,6 +46,8 @@ const initDb = () => {
 		  postBdd.map(post => {
 		  Post.create({
 			  authorId: post.authorId,
+			  authorSurname: post.authorSurname,
+			  authorName: post.authorName,
 			  title: post.title,
 			  content: post.content,
 			  category: post.category,
