@@ -8,7 +8,7 @@ const postsBdd = [
         content: "Salut à toutes et tous, ce soir le département communication vous invite à se retrouver au bar du Vanguard pour un petit apéro-pizzas !",
         category: "Fun",
         picture: "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
-        like: 2,
+        nbLike: 2,
         created: new Date()
        },
     {
@@ -25,8 +25,8 @@ const postsBdd = [
     {
         id: 3,
         authorId: 1,
-        authorSurname: "John",
-        authorName: "Doe",
+        authorSurname: "Damien",
+        authorName: "Will",
         title: "Webinaire sur les techniques de communication",
         content: "Salut les collègues ! Ce soir à 19h30 sur channel 5, il y a un webinaire de Gérard Menvuça sur les nouvelles techniques de communication. Perso j'adore ce mec, ultra compétent!  Bonne journée !",
         category: "Infos",

@@ -72,9 +72,13 @@ module.exports = (sequelize, DataTypes) => {
           isUrl: { msg: "Utilisez uniquement une url valide"},
         }
       },
-      like: {
+      nbLike: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      iLike: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       }
     },
 

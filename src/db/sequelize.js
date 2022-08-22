@@ -52,7 +52,8 @@ const initDb = () => {
 			  content: post.content,
 			  category: post.category,
 			  picture: post.picture,
-			  like: post.like
+			  nbLike: post.nbLike,
+			  iLike: post.iLike,
 		  }).then(post => console.log(post.toJSON())) // on demande à Sequelize de faire une requête à la BDD pour demander si chaque post a bien été créé, et on attend sa réponse en asynchrone. Elle arrive en JSON (pour afficher correctement les informations d'une instance d'un modèle) car la méthode 'toJSON' permet de n'afficher en JSOn que les valeurs qui nous interessent (et pas celles en interne de Sequelize). 
 		  })
 		  commentBdd.map(comment => {
