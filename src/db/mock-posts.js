@@ -8,7 +8,6 @@ const postsBdd = [
         content: "Salut à toutes et tous, ce soir le département communication vous invite à se retrouver au bar du Vanguard pour un petit apéro-pizzas !",
         category: "Fun",
         picture: "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png",
-        nbLike: 2,
         created: new Date()
        },
     {

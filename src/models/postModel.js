@@ -79,6 +79,10 @@ module.exports = (sequelize, DataTypes) => {
       iLike: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      usersLike: {
+        type: DataTypes.JSON,
+        defaultValue: [],
       }
     },
 

@@ -3,10 +3,11 @@
 const { User } = require('../src/db/sequelize')
 const bcrypt = require('bcrypt') // on en a besoin pour comparer les mots de passe
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize. 
+const multer = require('../src/middleware/multer-config')
   
 module.exports = (app) => {
   // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. Pas besoin du middleware d'authentification pour la création d'un compte. Par contre on utilise la méthode "hash" de Bcrypt pour encrypter le mot de passe et créer l'utilisateur (selon le modèle User). 
-  app.post('/api/users', (req, res) => {
+  app.post('/api/users', multer, (req, res) => {
     bcrypt.hash(req.body.password, 10)
           .then(hash => {
             User.create({
@@ -17,10 +18,10 @@ module.exports = (app) => {
               email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,
+              picture: `http://localhost:3000/${req.file.path}`, //ici je vais chercher le chemin complet avec le début de l'url qui correspond au chemin vers le serveur puis vers le dossier de l'image ("path" qui est une propriété de l'objet).
               conditions: req.body.conditions,
               isAdmin: req.body.isAdmin,
               isLogged: req.body.isLogged,
-              picture: 'http://localhost:3000/images/unknownUser.jpg',
             })
               .then(user => {
                 const message = `L'utilisateur ${req.body.username} a bien été crée.`

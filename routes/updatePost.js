@@ -1,14 +1,14 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
 const { Post } = require('../src/db/sequelize')
-
+const multer  = require('multer')
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize.
 
 const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
   
 module.exports = (app) => {
   // la méthode 'update' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
-  app.put('/api/posts/:id', auth, (req, res) => {
+  app.put('/api/posts/:id', auth, multer, (req, res) => {
     const id = req.params.id
     // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
     Post.update(req.body, {

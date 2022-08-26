@@ -54,6 +54,7 @@ const initDb = () => {
 			  picture: post.picture,
 			  nbLike: post.nbLike,
 			  iLike: post.iLike,
+			  usersLike: post.usersLike,
 		  }).then(post => console.log(post.toJSON())) // on demande à Sequelize de faire une requête à la BDD pour demander si chaque post a bien été créé, et on attend sa réponse en asynchrone. Elle arrive en JSON (pour afficher correctement les informations d'une instance d'un modèle) car la méthode 'toJSON' permet de n'afficher en JSOn que les valeurs qui nous interessent (et pas celles en interne de Sequelize). 
 		  })
 		  commentBdd.map(comment => {
@@ -65,19 +66,19 @@ const initDb = () => {
 				like: comment.like
 			}).then(comment => console.log(comment.toJSON())) // on demande à Sequelize de faire une requête à la BDD pour demander si chaque post a bien été créé, et on attend sa réponse en asynchrone. Elle arrive en JSON (pour afficher correctement les informations d'une instance d'un modèle) car la méthode 'toJSON' permet de n'afficher en JSOn que les valeurs qui nous interessent (et pas celles en interne de Sequelize). 
 			})
-		  // on pousse un nouvel utilisateur en bdd grace à la méthode 'create', avec un mot de passe hashé grace à bcrypt: 
-		  bcrypt.hash('Groupo2709@', 10)
-			.then(hash => {
-				User.create( {
-				  username: 'groupo',
-				  password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
-				  surname: "damien",
-				  name: "Will",
-				  email: "damien.will@ingdev.fr",
-				  department: "communication",
-				  tel: "0387554870",
-				  picture: "http://localhost:3000/images/unknownUser.jpg"
-				})
+			// on pousse un nouvel utilisateur admin en bdd grace à la méthode 'create', avec un mot de passe hashé grace à bcrypt: 
+			bcrypt.hash('Groupo2709@', 10)
+				.then(hash => {
+					User.create( {
+					username: 'groupo',
+					password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
+					surname: "damien",
+					name: "Will",
+					email: "damien.will@ingdev.fr",
+					department: "communication",
+					tel: "0387554870",
+					isAdmin: true,
+					})
 				.then(user => console.log(user.toJSON()))
 			})
 		  console.log('La base de donnée a bien été initialisée !') // j'affiche une indication de bonne connexion

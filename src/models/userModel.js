@@ -87,7 +87,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       picture: {
         type : DataTypes.STRING,
-        isUrl: {msg: "Veuillez entrer une URL correcte"},
       },
       isAdmin: {
         type: DataTypes.BOOLEAN,

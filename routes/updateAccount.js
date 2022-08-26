@@ -8,7 +8,7 @@ const multer = require('../src/middleware/multer-config')
   
 module.exports = (app) => {
   // la méthode 'update' de Express nous permet de passer des arguments : la route et des middlewares. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth' puis celui de Multer pour traiter les fichiers utilisateurs. 
-  app.put('/api/users/:id', auth, (req, res) => {
+  app.put('/api/users/:id', auth, multer, (req, res) => {
     const id = req.params.id
     // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
     User.update(req.body, {where: { id: id },})
