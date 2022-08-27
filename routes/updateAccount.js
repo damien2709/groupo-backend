@@ -11,18 +11,31 @@ module.exports = (app) => {
   app.put('/api/users/:id', auth, multer, (req, res) => {
     const id = req.params.id
     // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
-    User.update(req.body, {where: { id: id },})
-    .then(_ => {
+    User.update(
+      {
+        username: req.body.username,
+        surname: req.body.surname,
+        name: req.body.name,
+        email: req.body.email,
+        department: req.body.department,
+        tel: req.body.tel,
+        picture: `http://localhost:3000/${req.file.path}`, //ici je vais chercher le chemin complet avec le début de l'url qui correspond au chemin vers le serveur puis vers le dossier de l'image ("path" qui est une propriété de l'objet et qui reprend : /la destination/le nom du fichier sauvegardé).
+        conditions: req.body.conditions,
+        isAdmin: req.body.isAdmin,
+        isLogged: req.body.isLogged,
+      }, 
+      {where: { id: id },}
+    ).then(_ => {
        User.findByPk(id)
-        .then(user => { // on récupère le pokemon avec un certain identifiant en base de données pour l'afficher au client . API de qualité ! En appliquant l'instruction 'return' à la méthode 'findyPk', cela permet de transmettre l'erreur éventuelle de la méthode 'findByPk' au bloc '.catch()' situé plus bas dans le code. Cela nous permet de traiter toutes les erreurs 500 en une seule fois.  
+        .then(user => { // on récupère l'utilisateur avec un certain identifiant en base de données pour l'afficher au client . API de qualité ! En appliquant l'instruction 'return' à la méthode 'findyPk', cela permet de transmettre l'erreur éventuelle de la méthode 'findByPk' au bloc '.catch()' situé plus bas dans le code. Cela nous permet de traiter toutes les erreurs 500 en une seule fois.  
         // Pour gérer l'erreur 404, on va vérifier si le user demandé existe bien. La méthode 'findByPk' retourne 'null' si aucun user n'a été trouvé en bdd pour l'identifiant fourni en paramètre.  Donc en vérifiant si le résultat user est nul ou non, à la ligne 7, on est capable de déterminer si le user demandé par le client existe ou non.
           if(user === null) {
             const message = "L'utilisateur' demandé n'existe pas. Réessayez avec un autre identifiant."
             return res.status(404).json({message}) // Ici on place un 'return' qui permet de mettre fin à l'instruction sans passer à la suite du code à l'intérieur du '.then'. Car avec la méthode 'res.json' de Express, cette dernière applique tout le code avant elle !
           }
           else {
-          const message = `L'utilisateur ${user.username} a bien été modifié.`
-          res.json({message, data: user })
+            const message = `L'utilisateur ${user.username} a bien été modifié.`
+            res.json({message, data: user })
           }
         })
     })

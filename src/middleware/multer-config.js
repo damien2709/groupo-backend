@@ -29,5 +29,12 @@ module.exports = multer({
     storage: storage,
     limits: { filesize: 5000000}, // la limite de taille du fichier, ici 5MB
   // Une fonction pour filtrer et tester les types de fichiers fournis : A faire
-
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        cb(null, true);
+      } else {
+        cb(null, false);
+        return cb(new Error('Seul les fichiers au format .png, .jpg ou .jpeg sont acceptés'));
+      }
+    }
 }).single('picture'); //ensuite je précise si c'est un upload d'un fichier (.single) ou de plusieurs fichiers. Ici on appelle la méthode "single" pour dire qu'il s'agit d'un fichier unique et pas d'un groupe, à laquelle on passe l'argument "picture" qui est la valeur du "name" de l'input du formulaire front multiformat (input contenant le fichier).

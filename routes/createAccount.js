@@ -18,7 +18,7 @@ module.exports = (app) => {
               email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,
-              picture: `http://localhost:3000/${req.file.path}`, //ici je vais chercher le chemin complet avec le début de l'url qui correspond au chemin vers le serveur puis vers le dossier de l'image ("path" qui est une propriété de l'objet).
+              picture: `http://localhost:3000/${req.file.path}`, //ici je vais chercher le chemin complet avec le début de l'url qui correspond au chemin vers le serveur puis vers le dossier de l'image ("path" qui est une propriété de l'objet et qui reprend : /la destination/le nom du fichier sauvegardé).
               conditions: req.body.conditions,
               isAdmin: req.body.isAdmin,
               isLogged: req.body.isLogged,
