@@ -67,10 +67,6 @@ module.exports = (sequelize, DataTypes) => {
       picture: {
         type: DataTypes.STRING,
         allowNull: true, // la propriété est facultative
-        // Pas de contrainte d'unicité !
-        validate : {
-          isUrl: { msg: "Utilisez uniquement une url valide"},
-        }
       },
       nbLike: {
         type: DataTypes.INTEGER,

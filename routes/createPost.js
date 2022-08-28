@@ -1,7 +1,7 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
 const { Post } = require('../src/db/sequelize')
-const multer  = require('multer')
+const multer = require('../src/middleware/multer-config')
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize. 
 
 const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
@@ -9,9 +9,20 @@ const auth = require('../src/auth/auth') // J'importe mon middleware de vérific
 module.exports = (app) => {
   // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
   app.post('/api/posts', auth, multer, (req, res) => {
-    Post.create(req.body)
+    Post.create({
+        authorId: req.body.authorId,
+        authorSurname: req.body.authorSurname,
+        authorName: req.body.authorName,
+        title: req.body.title,
+        content: req.body.content,
+        category: req.body.category,
+        picture: `http://localhost:3000/${req.file.path}`,
+        nbLike: req.body.nbLike,
+        iLike: req.body.iLike,
+        usersLike: req.body.usersLike,
+    })
       .then(post => {
-        const message = `Le message ${req.body.title} a bien été crée.`
+        const message = `Le message a bien été crée.`
         res.json({ message, data: post })
       })
       .catch(error => {
