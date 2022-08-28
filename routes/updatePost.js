@@ -56,6 +56,7 @@ module.exports = (app) => {
       }
     })
     }
+    // Version sans fichier
     else {
       Post.update(req.body, {where: { id: id }})
       .then(_ => {
