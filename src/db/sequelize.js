@@ -77,6 +77,7 @@ const initDb = () => {
 					email: "damien.will@ingdev.fr",
 					department: "communication",
 					tel: "0387554870",
+					picture: 'http://localhost:3000/images/unknownUser.jpg',
 					isAdmin: true,
 					})
 				.then(user => console.log(user.toJSON()))
