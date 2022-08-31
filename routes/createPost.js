@@ -1,5 +1,6 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
+const { User } = require('../src/db/sequelize')
 const { Post } = require('../src/db/sequelize')
 const multer = require('../src/middleware/multer-config')
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize. 
@@ -9,12 +10,14 @@ const auth = require('../src/auth/auth') // J'importe mon middleware de vérific
 module.exports = (app) => {
   // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
   app.post('/api/posts', auth, multer, (req, res) => {
+    // Je récupère le user qui a ecrit le post car il y a une association one to many
+    const user = {
+      id: req.body.authorId,
+    }
+    console.log(user);
     // version avec fichier
     if(req.file){
       Post.create({
-        authorId: req.body.authorId,
-        authorSurname: req.body.authorSurname,
-        authorName: req.body.authorName,
         title: req.body.title,
         content: req.body.content,
         category: req.body.category,
@@ -22,6 +25,8 @@ module.exports = (app) => {
         nbLike: req.body.nbLike,
         iLike: req.body.iLike,
         usersLike: req.body.usersLike,
+        user_id: user.id,
+
     })
       .then(post => {
         const message = `Le message a bien été crée.`
@@ -43,15 +48,15 @@ module.exports = (app) => {
     //version sans fichier
     else {
       Post.create({
-        authorId: req.body.authorId,
-        authorSurname: req.body.authorSurname,
-        authorName: req.body.authorName,
         title: req.body.title,
         content: req.body.content,
         category: req.body.category,
         nbLike: req.body.nbLike,
         iLike: req.body.iLike,
         usersLike: req.body.usersLike,
+        user_id: user.id,
+
+
     })
       .then(post => {
         const message = `Le message a bien été crée.`

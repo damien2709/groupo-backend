@@ -1,7 +1,8 @@
 // **** ROLE : définir un modèle d'utilisateur pour comparer les identifiants envoyés par nos utilisateurs avec les identifiants déjà stocké en base de données.
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('User', {
+    
+    const User = sequelize.define('User', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -92,12 +93,15 @@ module.exports = (sequelize, DataTypes) => {
       isAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-      }
+      },
     },
     // Options facultatives de paramétrage globales
   {
     timestamps: true, // en passant la valeur 'true', on indique que l'on souhaite modifier le comportement par défaut proposé par Sequelize (c’est-à-dire faire des modification de configuration globale). 
     createdAt: 'created', // on renomme la propriété 'createdAt' en 'created', ce qui nous permet de renvoyer la valeur 'created' à l'utilisateur ! 
     updatedAt: false //On peut aussi désactiver la propriété 'updatedAt' en lui passant la valeur 'false'. On refuse la sauvegarde auto proposée par Sequelize.
-  })
+  });
+
+
+  return User;
   }
