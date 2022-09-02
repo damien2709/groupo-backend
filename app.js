@@ -33,6 +33,8 @@ sequelize.initDb()  // On appelle la méthode 'initDb' que l'on a définit dans 
     // GET
 require('./routes/getAllPosts')(app) //on importe le fichier du point de terminaison qui est en fait une fonction qui prend un paramètre auquel on va donner la valeur 'app' qui est l'application Express. 
 
+require('./routes/getAllAccounts')(app)
+
 require('./routes/getOnePost')(app) // la route et le traitement pour voir un élément unique.
 
 require('./routes/getYourAccount')(app) // la route et le traitement pour voir un élément unique.

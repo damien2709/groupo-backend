@@ -1,6 +1,5 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
-const { User } = require('../src/db/sequelize')
 const { Post } = require('../src/db/sequelize')
 const multer = require('../src/middleware/multer-config')
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize. 
@@ -12,7 +11,7 @@ module.exports = (app) => {
   app.post('/api/posts', auth, multer, (req, res) => {
     // Je récupère le user qui a ecrit le post car il y a une association one to many
     const user = {
-      id: req.body.authorId,
+      id: req.body.userId,
     }
     console.log(user);
     // version avec fichier
@@ -55,7 +54,6 @@ module.exports = (app) => {
         iLike: req.body.iLike,
         usersLike: req.body.usersLike,
         user_id: user.id,
-
 
     })
       .then(post => {

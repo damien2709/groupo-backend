@@ -8,17 +8,18 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      username: {
-        type: DataTypes.STRING,
-        // on ajoute une contrainte d'unicité avec 'unique' de SEquelize, sur le nom d'utilisateur. 
-        unique : { 
-            msg: 'Le nom est déjà pris !'
-        },
+      email: {
+        type : DataTypes.STRING,
         allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
-        // On définit pour la propriété 2 validateurs pour vérifier que le nom ne comporte pas une string vide et que la valeur de la propriété ne peut pas être nulle. On définit un message spécifique pour chaque validateur !
+        unique : { 
+          msg: "L'email existe déjà dans la base de données !"
+        },
+        // On définit pour la propriété 3 validateurs pour vérifier que le nom ne comporte pas une string vide, que la valeur de la propriété ne peut pas être nulle et qu'il s'agit bien d'un email. On définit un message spécifique pour chaque validateur !
         validate : {
-          notEmpty: { msg: "Le nom de l'utilisateur ne peut être vide !" },
-          notNull: { mes: "Veuillez définir un nom d'utilisateur" }
+          notEmpty: { msg: "L'email ne peut être vide !" },
+          notNull: { mes: "Veuillez renseigner votre email" },
+          isEmail: {msg: "Veuillez rentrer un email correct"}
+          // on utilise la validateur d'email de Sequelize
         }
       },
       password: {
@@ -51,21 +52,6 @@ module.exports = (sequelize, DataTypes) => {
         validate : {
           notEmpty: { msg: "Le prénom ne peut être vide !" },
           notNull: { mes: "Veuillez renseigner votre nom" }
-        }
-      },
-      email: {
-        type : DataTypes.STRING,
-        allowNull: false, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
-        unique : { 
-          msg: "L'email existe déjà dans la base de données !"
-      },
-        // On définit pour la propriété 3 validateurs pour vérifier que le nom ne comporte pas une string vide, que la valeur de la propriété ne peut pas être nulle et qu'il s'agit bien d'un email. On définit un message spécifique pour chaque validateur !
-        validate : {
-          notEmpty: { msg: "L'email ne peut être vide !" },
-          notNull: { mes: "Veuillez renseigner votre email" },
-          isEmail: {msg: "Veuillez rentrer un email correct"}
-          // on utilise la validateur d'email de Sequelize
-
         }
       },
       department:{

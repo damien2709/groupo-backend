@@ -9,7 +9,7 @@ const privateKey = require('../src/auth/private_key')
 module.exports = (app) => {
   app.post('/api/login', (req, res) => {
   
-    User.findOne({ where: { username: req.body.username } }) // récupération des paramètres de l'URL et requête vers la bdd pour récupérer les infos de l'utilisateur
+    User.findOne({ where: { email: req.body.email } }) // récupération des paramètres de l'URL et requête vers la bdd pour récupérer les infos de l'utilisateur
         .then(user => {
             if(!user) { // on vérifie si l'utilisateur existe ou non. Si non, on retourne un message d'erreur avec le code de status 404 car la ressource n'a pas été trouvé.
                 const message = "L'utilisateur demandé n'existe pas !"

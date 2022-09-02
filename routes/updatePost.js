@@ -10,13 +10,14 @@ module.exports = (app) => {
   // la méthode 'update' de Express nous permet de passer 2 arguments : la route et un middleware. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth'.
   app.put('/api/posts/:id', auth, multer, (req, res) => {
     const id = req.params.id;
+    // Je récupère le user qui a ecrit le post car il y a une association one to many
+    const user = {
+      id: req.body.userId,
+    }
     // la version si la requête comporte un fichier
     if(req.file){
     // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
     Post.update({
-      authorId: req.body.authorId,
-      authorSurname: req.body.authorSurname,
-      authorName: req.body.authorName,
       title: req.body.title,
       content: req.body.content,
       category: req.body.category,
@@ -24,6 +25,7 @@ module.exports = (app) => {
       nbLike: req.body.nbLike,
       iLike: req.body.iLike,
       usersLike: req.body.usersLike,
+      user_id: user.id,
     }, 
     {
       where: { id: id }

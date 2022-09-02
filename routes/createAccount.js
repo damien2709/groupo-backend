@@ -11,11 +11,10 @@ module.exports = (app) => {
     bcrypt.hash(req.body.password, 10)
           .then(hash => {
             User.create({
-              username: req.body.username,
+              email: req.body.email,
               password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
               surname: req.body.surname,
               name: req.body.name,
-              email: req.body.email,
               department: req.body.department,
               tel: req.body.tel,           
               conditions: req.body.conditions,
@@ -23,7 +22,7 @@ module.exports = (app) => {
               isLogged: req.body.isLogged,
             })
               .then(user => {
-                const message = `L'utilisateur ${req.body.username} a bien été crée.`
+                const message = `L'utilisateur ${req.body.email} a bien été crée.`
                 res.json({ message, data: user })
               })
           .catch(error => {

@@ -62,11 +62,10 @@ const initDb = () => {
 			bcrypt.hash('Groupo2709@', 10)
 				.then(hash => {
 					User.create( {
-					username: 'groupo',
+					email: "admin@ingdev.fr",
 					password: hash, //ici on a le mot de passe hashé, c'est celui que l'on va pousser en bdd. 
-					surname: "damien",
+					surname: "Damien",
 					name: "Will",
-					email: "damien.will@ingdev.fr",
 					department: "communication",
 					tel: "0387554870",
 					picture: 'http://localhost:3000/images/unknownUser.jpg',

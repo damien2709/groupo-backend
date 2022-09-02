@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: true, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle est obligatoire !
+        allowNull: true, // Permet d'indiquer si la propriété est facultative ou non. Ici, elle n'est pas obligatoire !
         // Pas de contrainte d'unicité !
       },
       content: {

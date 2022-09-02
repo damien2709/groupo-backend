@@ -15,10 +15,9 @@ module.exports = (app) => {
       // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
       User.update(
         {
-          username: req.body.username,
+          email: req.body.email,
           surname: req.body.surname,
           name: req.body.name,
-          email: req.body.email,
           department: req.body.department,
           tel: req.body.tel,
           picture: `http://localhost:3000/${req.file.path}`, //ici je vais chercher le chemin complet avec le début de l'url qui correspond au chemin vers le serveur puis vers le dossier de l'image ("path" qui est une propriété de l'objet et qui reprend : /la destination/le nom du fichier sauvegardé).
@@ -36,7 +35,7 @@ module.exports = (app) => {
               return res.status(404).json({message}) // Ici on place un 'return' qui permet de mettre fin à l'instruction sans passer à la suite du code à l'intérieur du '.then'. Car avec la méthode 'res.json' de Express, cette dernière applique tout le code avant elle !
             }
             else {
-              const message = `L'utilisateur ${user.username} a bien été modifié.`
+              const message = `L'utilisateur ${user.email} a bien été modifié.`
               res.json({message, data: user })
             }
           })
