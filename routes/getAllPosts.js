@@ -27,24 +27,28 @@ module.exports = (app) => {
           res.json({ message, data: posts }) 
         })
       }
-        //------- en 2 : rechercher par titre large de message.
-      else if (req.query.title) { //On souhaite extraire de l'url le paramètre 'title'. On passe par la requête 'req' fournie par Express. 
-        const title = req.query.title
+      //------- en 2 : rechercher par titre large de message.
+      else if (req.query.content) { //On souhaite extraire de l'url le paramètre 'content'. On passe par la requête 'req' fournie par Express. 
+        const content = req.query.content
         return Post.findAll({ 
           where: { 
-            title: { //'title' est la propriété du modèle post. 
-              [Op.like]: `%${title}%` // 'title' est le critère de la recherche. On passe par l'opérateur Sequelize [Op.like] pour mettre en place la recherche large par titre ('titre') d'un message ou le terme de la recherche est contenu dans le titre du message.  
-            }
+            [Op.or] : [
+              {content: { //'content' est la propriété du modèle post. 
+                [Op.like]: `%${content}%`}, // 'content' est le critère de la recherche. On passe par l'opérateur Sequelize [Op.like] pour mettre en place la recherche large par contenu ('content') d'un message ou le terme de la recherche est contenu dans le contenu du message.  
+              },
+              {title: { //'content' est la propriété du modèle post. 
+                [Op.like]: `%${content}%`}, // 'content' est le critère de la recherche. On passe par l'opérateur Sequelize [Op.like] pour mettre en place la recherche large par contenu ('content') d'un message ou le terme de la recherche est contenu dans le contenu du message.  
+              }
+          ]
           },
           order: [
             ['created', 'DESC'] //ici on va ordonner les résultats par date de création (avec la propriété 'created') et par odre décroissant.
           ],
         })
         .then(posts => {
-          const message = `il y a ${posts.length} messages correspondant à la recherche ${title}.`
+          const message = `il y a ${posts.length} messages correspondant à la recherche ${content}.`
           res.json({ message, data: posts }) 
         })
-
       }
         // Si pas de recherche spécifique : 
       else {
