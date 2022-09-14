@@ -1,7 +1,7 @@
 // ****** ROLE : APPLIQUER LE TRAITEMENT A UNE REQUETE QUI ARRIVE SUR CE POINT DE TERMINAISON
 
 const { Post } = require('../src/db/sequelize')
-
+const fs = require('fs');
 const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
   
 module.exports = (app) => {
@@ -16,11 +16,22 @@ module.exports = (app) => {
         }
         else {
         const postDeleted = post;
-        // Ensuite, grace à la méthode 'destroy()' de Sequelize, on va pouvoir supprimer le pokemon. On utilise l'instruction 'return' qui permet de factoriser (mutualiser) la gestion de l'erreur 500 ( car il y a 2 requêtes : findByPk() et destoy()). Voir fichier updatePokemon.js.
+        // Ensuite, grace à la méthode 'destroy()' de Sequelize, on va pouvoir supprimer le pokemon. On utilise l'instruction 'return' qui permet de factoriser (mutualiser) la gestion de l'erreur 500 ( car il y a 2 requêtes : findByPk() et destroy()). Voir fichier 
         return Post.destroy({
           where: { id: post.id }
         })
           .then(_ => {
+            const filename = post.picture.split('/images/')[1]; // ici on va spliter l'url de la photo du post pour ne garder que le dernier élément : le nom du fichier
+            console.log("filename");
+            // ENsuite on va utiliser la fonction "unlink" de fs pour supprimer le fichier physiquement du dossier "images"
+            fs.unlink(`images/${filename}`, (error => {
+              if (error) {
+                console.log(error);
+              }
+              else {
+                console.log("le  fichier a bien été supprimé du dossier images");
+              }
+            }))
             const message = `Le message avec l'identifiant n°${postDeleted.id} a bien été supprimé.`
             res.json({message, data: postDeleted })
           })
@@ -28,7 +39,7 @@ module.exports = (app) => {
       })
       // Ici je gère l'erreur 500 de la requête 'update' qui pourrait ne pas aboutir.
     .catch(error => {
-      const message = " Le message n'a pas pu être modifié. Réessayez dans quelques instants."
+      const message = " Le message n'a pas pu être supprimé. Réessayez dans quelques instants."
       res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients
     })
   })
