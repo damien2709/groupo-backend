@@ -29,7 +29,7 @@ module.exports = (app) => {
                   console.log("le fichier a bien été supprimé du dossier images");
                 }
               }))
-              const message = `L'utilisateur' avec le nom d'utilisateur : ${userDeleted.username}, a bien été supprimé.`
+              const message = `L'utilisateur' avec le nom d'utilisateur : ${userDeleted.email}, a bien été supprimé.`
               res.json({message, data: userDeleted })
             })
             .catch(error => {
