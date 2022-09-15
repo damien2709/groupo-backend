@@ -35,12 +35,17 @@ module.exports = (app) => {
             const message = `Le message avec l'identifiant n°${postDeleted.id} a bien été supprimé.`
             res.json({message, data: postDeleted })
           })
+          .catch(error => {
+            // Si l'erreur vient du coté serveur, on va paramétrer une réponse code 500.
+              const message = " Le post n'a pas pu être supprimé. Réessayez dans quelques instants."
+              res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
+            })
         }
       })
       // Ici je gère l'erreur 500 de la requête 'update' qui pourrait ne pas aboutir.
-    .catch(error => {
-      const message = " Le message n'a pas pu être supprimé. Réessayez dans quelques instants."
-      res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients
-    })
+      .catch(error => {
+        const message = " Le message n'a pas pu être supprimé. Réessayez dans quelques instants."
+        res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients
+      })
   })
 }
