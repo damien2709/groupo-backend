@@ -20,7 +20,7 @@ module.exports = (app) => {
                 .then(isPasswordValid => {
                     if(!isPasswordValid) { // on vérifie si le mot de passe est valide. Si non, on retourne un message d'erreur avec le code de status 401 car l'utilisateur n'a pas accès aux ressources. 
                         const message = `Le mot de passe n'est pas valide !`;
-                        res.status(401).json({ message })
+                        return res.status(401).json({ message })
                     }
                     else {
                 // JWT : on va générer un jeton JWT avec la méthode 'sign' du module jsonwebtToken. On le construit à l'aide de 3 informations : l'identifiant de l'utilisateur, la clé secrète et la date d'expiration. On récupère le jeton dans la constante 'token'. 

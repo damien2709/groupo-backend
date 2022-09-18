@@ -3,6 +3,7 @@ const { User } = require('../src/db/sequelize')
 const { Post } = require('../src/db/sequelize')
 const multer = require('../src/middleware/multer-config')
 const { ValidationError } = require('sequelize') // On crée une constante issue de Sequelize pour la gestion des erreurs issues des validateurs internes à Sequelize.
+const fs = require('fs');
 
 const auth = require('../src/auth/auth') // J'importe mon middleware de vérification et validation du jeton JWT
   
@@ -11,7 +12,7 @@ module.exports = (app) => {
   app.put('/api/posts/:id', auth, multer, (req, res) => {
     const id = req.params.id;
     // Je récupère le user qui a ecrit le post car il y a une association one to many
-    User.findByPk(req.body.userId)
+    User.findByPk(req.body.user_id)
     .then(user => {
       // Je cherche maintenant mon post
       Post.findByPk(id)
@@ -20,6 +21,17 @@ module.exports = (app) => {
         if(post.user_id == user.id || user.isAdmin == true){
             // la version si la requête comporte un fichier
             if(req.file){
+              const filename = post.picture.split('/images/')[1]; // ici on va récupérer la photo du post 
+              console.log("filename");
+              // ENsuite on va utiliser la fonction "unlink" de fs pour supprimer le fichier physiquement du dossier "images"
+              fs.unlink(`images/${filename}`, (error => {
+                if (error) {
+                  console.log(error);
+                }
+                else {
+                  console.log("le  fichier a bien été supprimé du dossier images");
+                }
+              }));
               // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
               Post.update({
                 title: req.body.title,
@@ -106,6 +118,5 @@ module.exports = (app) => {
     .catch((error) =>{
       console.log(error.message);
     })
-
   })
 }

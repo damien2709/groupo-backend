@@ -10,6 +10,7 @@ module.exports = (app) => {
   // la méthode 'update' de Express nous permet de passer des arguments : la route et des middlewares. EN middleware, on va passer celui de la validation du token JWT, importé plus haut dans la constante 'auth' puis celui de Multer pour traiter les fichiers utilisateurs. 
   app.put('/api/users/:id', auth, multer, (req, res) => {
     const id = req.params.id;
+    // Je récupère le user qui a ecrit le post car il y a une association one to many
     // la version si la requête comporte un fichier
     if(req.file){
       // on applique la méthode update() de Sequelize. Elle ne renvoie malheureusement pas de réponse. Il va falloir créer une réponse en s'appuyant sur la méthode 'findByPk' de Sequelize. 
