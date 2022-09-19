@@ -68,7 +68,7 @@ const initDb = () => {
 					name: "Will",
 					department: "communication",
 					tel: "0387554870",
-					picture: 'http://localhost:3000/images/unknownUser.jpg',
+					picture: 'http://localhost:3000/images/unknownUser-1.jpg',
 					isAdmin: true,
 					})
 				// ensuite on récupère le nouvel utilisateur 'user' puis on crée des posts qui reprendront son id, car il y a une association one to many entre les deux. . Les posts sont dans le scope du user (dans son .'then'). Je crée des nouvelles instances de post avec la méthode create de mon modèle. Je ne passe ni son ID ni sa date de création, c'est la BDD qui s'en occupe ! Je vais imbriquer les posts dans le user créé puis les commentaires dans les posts créés. Pour faire ça, je rentre dans les scopes des then. 

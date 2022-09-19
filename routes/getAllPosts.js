@@ -36,7 +36,7 @@ module.exports = (app) => {
               {content: { //'content' est la propriété du modèle post. 
                 [Op.like]: `%${content}%`}, // 'content' est le critère de la recherche. On passe par l'opérateur Sequelize [Op.like] pour mettre en place la recherche large par contenu ('content') d'un message ou le terme de la recherche est contenu dans le contenu du message.  
               },
-              {title: { //'content' est la propriété du modèle post. 
+              {title: { //'title' est la propriété du modèle post. 
                 [Op.like]: `%${content}%`}, // 'content' est le critère de la recherche. On passe par l'opérateur Sequelize [Op.like] pour mettre en place la recherche large par contenu ('content') d'un message ou le terme de la recherche est contenu dans le contenu du message.  
               }
           ]
@@ -47,6 +47,21 @@ module.exports = (app) => {
         })
         .then(posts => {
           const message = `il y a ${posts.length} messages correspondant à la recherche ${content}.`
+          res.json({ message, data: posts }) 
+        })
+      }
+      else if (req.query.userId) { //On souhaite extraire de l'url le paramètre 'userId'. On passe par la requête 'req' fournie par Express. 
+        const userId = req.query.userId
+        return Post.findAll ({ 
+          where: { 
+            user_id: userId
+          },
+          order: [
+            ['created', 'DESC'] //ici on va ordonner les résultats par date de création (avec la propriété 'created') et par odre décroissant.
+          ],
+        }) // on a ajouté le paramètre 'where' à la méthode de Sequelize 'findAll'.
+        .then(posts => {
+          const message = `il y a ${posts.length} message(s) appartenant à l'utilisateur.`
           res.json({ message, data: posts }) 
         })
       }

@@ -27,19 +27,25 @@ module.exports = (app) => {
               where: { id: id }
             })
               .then(_ => {
-                const filename = post.picture.split('/images/')[1]; // ici on va spliter l'url de la photo du post pour ne garder que le dernier élément : le nom du fichier
-                console.log("filename");
-                // ENsuite on va utiliser la fonction "unlink" de fs pour supprimer le fichier physiquement du dossier "images"
-                fs.unlink(`images/${filename}`, (error => {
-                  if (error) {
-                    console.log(error);
-                  }
-                  else {
-                    console.log("le  fichier a bien été supprimé du dossier images");
-                  }
-                }))
-                const message = `Le message avec l'identifiant n°${postDeleted.id} a bien été supprimé.`
-                res.json({message, data: postDeleted })
+                if(post.picture != null){
+                  const filename = post.picture.split('/images/')[1]; // ici on va spliter l'url de la photo du post pour ne garder que le dernier élément : le nom du fichier
+                  console.log("filename");
+                  // ENsuite on va utiliser la fonction "unlink" de fs pour supprimer le fichier physiquement du dossier "images"
+                  fs.unlink(`images/${filename}`, (error => {
+                    if (error) {
+                      console.log(error);
+                    }
+                    else {
+                      console.log("le  fichier a bien été supprimé du dossier images");
+                    }
+                  }))
+                  const message = `Le message avec l'identifiant n°${postDeleted.id} a bien été supprimé.`
+                  res.json({message, data: postDeleted })
+                }
+                else{
+                  const message = `Le message avec l'identifiant n°${postDeleted.id} a bien été supprimé.`
+                  res.json({message, data: postDeleted })
+                }
               })
               .catch(error => {
                 // Si l'erreur vient du coté serveur, on va paramétrer une réponse code 500.

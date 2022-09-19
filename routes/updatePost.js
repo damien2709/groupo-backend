@@ -18,7 +18,7 @@ module.exports = (app) => {
       Post.findByPk(id)
       .then(post => { 
         // On vérifie que le user est soit admin soit l'auteur du post
-        if(post.user_id == user.id || user.isAdmin == true){
+        if(post.user_id == user.id || user.isAdmin){
             // la version si la requête comporte un fichier
             if(req.file){
               const filename = post.picture.split('/images/')[1]; // ici on va récupérer la photo du post 
@@ -74,8 +74,16 @@ module.exports = (app) => {
               })
               }
               // Version sans fichier
-              else {
-                Post.update(req.body, {where: { id: id }})
+            else {
+                Post.update({
+                title: req.body.title,
+                content: req.body.content,
+                category: req.body.category,
+                nbLike: req.body.nbLike,
+                iLike: req.body.iLike,
+                usersLike: req.body.usersLike,
+                },  
+                {where: { id: id }})
                 .then(_ => {
                   return Post.findByPk(id)
                   .then(post => { // on récupère le post avec un certain identifiant en base de données pour l'afficher au client . API de qualité ! En appliquant l'instruction 'return' à la méthode 'findyPk', cela permet de transmettre l'erreur éventuelle de la méthode 'findByPk' au bloc '.catch()' situé plus bas dans le code. Cela nous permet de traiter toutes les erreurs 500 en une seule fois.  
@@ -105,7 +113,17 @@ module.exports = (app) => {
               })
               }
                 }
+        // Sinon on va juste enregistrer les likes et préciser que le user n'a pas les droits pour modifier le message
         else {
+          Post.update({
+            nbLike: req.body.nbLike,
+            usersLike: req.body.usersLike,
+          }, 
+          {
+            where: { id: id }
+          })
+          .then(_ => { console.log("les données de like ont bien été prises en compte")})
+          .catch(error => { console.log(error.message)})
           const message = "L'utilisateur n'a pas les autorisations pour modifier le message !"
           return res.status(404).json({message})
         }
