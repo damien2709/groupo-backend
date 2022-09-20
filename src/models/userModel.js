@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { mes: "Veuillez définir un mot de passe" },
           // On définit une regex pour le mot de passe et un message d'erreur
           is: {
-            args: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$/],
+            args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$/,
             msg: "Le mot de passe doit contenir au moins 8 caractères avec au moins 1 majuscule, 1 minuscule et un caractère spécial."
           }
         }

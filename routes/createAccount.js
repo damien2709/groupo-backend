@@ -8,7 +8,7 @@ const multer = require('../src/middleware/multer-config')
 module.exports = (app) => {
   // la méthode 'post' de Express nous permet de passer 2 arguments : la route et un middleware. Pas besoin du middleware d'authentification pour la création d'un compte. Par contre on utilise la méthode "hash" de Bcrypt pour encrypter le mot de passe et créer l'utilisateur (selon le modèle User). 
   app.post('/api/users', multer, (req, res) => {
-    bcrypt.hash(req.body.password, 10)
+      bcrypt.hash(req.body.password, 10)
           .then(hash => {
             User.create({
               email: req.body.email,
@@ -37,7 +37,7 @@ module.exports = (app) => {
                 res.status(500).json({message, data: error}) // On utilise la méthode 'status()' d'Express pour définir un statut à notre réponse. La méthode prend en paramètre le code de statut http à retourner à nos clients. 
                 }
           })
-  
     })
+    
   })
 }
