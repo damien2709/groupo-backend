@@ -18,50 +18,90 @@ module.exports = (app) => {
         if(post.user_id == user.id || user.isAdmin){
             // ---------- la version si la requête comporte un fichier
             if(req.file){
-              const filename = post.picture.split('/images/')[1]; 
-              console.log("filename");
-              fs.unlink(`images/${filename}`, (error => {
-                if (error) {
-                  console.log(error);
+              // SI le post ne contient pas d'image
+              if(post.picture === null) {
+                Post.update({
+                  title: req.body.title,
+                  content: req.body.content,
+                  category: req.body.category,
+                  picture: `http://localhost:3000/${req.file.path}`,
+                  nbLike: req.body.nbLike,
+                  iLike: req.body.iLike,
+                  usersLike: req.body.usersLike,
+                }, 
+                {
+                  where: { id: id }
+                })
+                .then(_ => {
+                  return Post.findByPk(id)
+                    .then(post => { 
+                      if(post === null) {
+                        const message = "L'article' demandé n'existe pas. Réessayez avec un autre identifiant."
+                        return res.status(404).json({message}) 
+                      }
+                      else {
+                      const message = `L'article' ${post.title} a bien été modifié.`
+                      res.json({message, data: post })
+                      }
+                    })
+                })
+                .catch(error => {
+                  if(error instanceof ValidationError) {
+                    return res.status(400).json({ message: error.message, data: error}) 
+                  }
+                  else {
+                    const message = " L'article n'a pas pu être modifié. Réessayez dans quelques instants."
+                    res.status(500).json({message, data: error}) 
+                  }
+                })
+              }
+              // Si le post contient une image
+              else {
+                const filename = post.picture.split('/images/')[1]; 
+                console.log("filename");
+                fs.unlink(`images/${filename}`, (error => {
+                  if (error) {
+                    console.log(error);
+                  }
+                  else {
+                    console.log("le  fichier a bien été supprimé du dossier images");
+                  }
+                }));
+                Post.update({
+                  title: req.body.title,
+                  content: req.body.content,
+                  category: req.body.category,
+                  picture: `http://localhost:3000/${req.file.path}`,
+                  nbLike: req.body.nbLike,
+                  iLike: req.body.iLike,
+                  usersLike: req.body.usersLike,
+                }, 
+                {
+                  where: { id: id }
+                })
+                .then(_ => {
+                  return Post.findByPk(id)
+                    .then(post => { 
+                      if(post === null) {
+                        const message = "L'article' demandé n'existe pas. Réessayez avec un autre identifiant."
+                        return res.status(404).json({message}) 
+                      }
+                      else {
+                      const message = `L'article' ${post.title} a bien été modifié.`
+                      res.json({message, data: post })
+                      }
+                    })
+                })
+                .catch(error => {
+                  if(error instanceof ValidationError) {
+                    return res.status(400).json({ message: error.message, data: error}) 
+                  }
+                  else {
+                    const message = " L'article n'a pas pu être modifié. Réessayez dans quelques instants."
+                    res.status(500).json({message, data: error}) 
+                  }
+                })
                 }
-                else {
-                  console.log("le  fichier a bien été supprimé du dossier images");
-                }
-              }));
-              Post.update({
-                title: req.body.title,
-                content: req.body.content,
-                category: req.body.category,
-                picture: `http://localhost:3000/${req.file.path}`,
-                nbLike: req.body.nbLike,
-                iLike: req.body.iLike,
-                usersLike: req.body.usersLike,
-              }, 
-              {
-                where: { id: id }
-              })
-              .then(_ => {
-                return Post.findByPk(id)
-                  .then(post => { 
-                    if(post === null) {
-                      const message = "L'article' demandé n'existe pas. Réessayez avec un autre identifiant."
-                      return res.status(404).json({message}) 
-                    }
-                    else {
-                    const message = `L'article' ${post.title} a bien été modifié.`
-                    res.json({message, data: post })
-                    }
-                  })
-              })
-              .catch(error => {
-                if(error instanceof ValidationError) {
-                  return res.status(400).json({ message: error.message, data: error}) 
-                }
-                else {
-                  const message = " L'article n'a pas pu être modifié. Réessayez dans quelques instants."
-                  res.status(500).json({message, data: error}) 
-                }
-              })
               }
               // ---------------- Version sans fichier
             else {
