@@ -11,20 +11,20 @@ La stack utilisée pour ce projet:
 
 ## DATABASE
 
-'groupomania', // C'est le nom de la BDD que l'on veut créer
-'root', // C'est l'identifiant permettant d'accéder à la BDD, par défaut avec MAMP
-'root', // C'est le mot de passe de la BDD pour l'utilisateur, par défaut avec MAMP 
-host: 'localhost', 
-port: celui de votre serveur, 
-dialect: 'mysql', 
+- 'groupomania', // C'est le nom de la BDD que l'on veut créer
+- 'root', // C'est l'identifiant permettant d'accéder à la BDD, par défaut avec MAMP
+- 'root', // C'est le mot de passe de la BDD pour l'utilisateur, par défaut avec MAMP 
+- host: 'localhost', 
+- port: celui de votre serveur, 
+- dialect: 'mysql', 
 
 
 ### BACKEND
 
 Ouvrir le dossier Backend dans le terminal de votre éditeur puis exécuter la commande:
-'npm install'
+- 'npm install'
 
 puis
 
-'npm run start' 
+- 'npm run start' 
 
