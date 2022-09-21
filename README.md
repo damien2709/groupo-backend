@@ -1,24 +1,30 @@
-# frontend
+# Projet 7 - Groupomania !
 
-## Project setup
-```
-npm install
-```
+7ème et dernier projet de la formation développeur web d'Openclassrooms.
+Créer un réseau social d'entreprise.
+La stack utilisée pour ce projet:
 
-### Compiles and hot-reloads for development
-```
-npm run start
-```
+- VueJs + v-router 
+- NodeJs + express + sequelize
+- Mysql-MAMP
 
-### Compiles and minifies for production
-```
 
-```
+## DATABASE
 
-### Lints and fixes files
-```
+'groupomania', // C'est le nom de la BDD que l'on veut créer
+'root', // C'est l'identifiant permettant d'accéder à la BDD, par défaut avec MAMP
+'root', // C'est le mot de passe de la BDD pour l'utilisateur, par défaut avec MAMP 
+host: 'localhost', 
+port: celui de votre serveur, 
+dialect: 'mysql', 
 
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### BACKEND
+
+Ouvrir le dossier Backend dans le terminal de votre éditeur puis exécuter la commande:
+'npm install'
+
+puis
+
+'npm run start' 
+
